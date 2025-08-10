@@ -81,19 +81,19 @@
     .logos-track {
         display: flex;
         align-items: center;
-        width: calc(200px * 12); 
-        animation: scroll 40s linear infinite; 
+        width: calc(180px * 12); 
+        animation: scroll 35s linear infinite; 
     }
     .logo-item {
-        width: 200px; 
+        width: 180px; 
         flex-shrink: 0;
-        text-align: center;
-        padding: 0 20px; 
+        padding: 0 15px; 
     }
     .logo-item img {
         height: 60px;
-        width: auto;
-        max-width: 150px; 
+        width: 150px;
+        object-fit: contain;
+        margin: 0 auto;
         cursor: pointer;
         filter: grayscale(100%); 
         opacity: 0.6; 
@@ -106,7 +106,7 @@
     }
     @keyframes scroll {
         0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-200px * 6)); }
+        100% { transform: translateX(calc(-180px * 6)); }
     }
 
     /* --- Custom Swiper Styles for Benefits Slider --- */
@@ -202,6 +202,21 @@
         box-shadow: 0 0 12px 4px rgba(59, 130, 246, 0.4);
         transition: all 0.2s ease-in-out;
     }
+
+    /* --- Custom Dropdown Styles --- */
+    .custom-dropdown-option {
+        cursor: default;
+        user-select: none;
+        position: relative;
+        padding: 0.5rem 1rem;
+    }
+    .custom-dropdown-option:hover {
+        background-color: #DBEAFE; /* blue-100 */
+    }
+    .custom-dropdown-option.selected {
+        font-weight: 600;
+        color: #1D4ED8; /* blue-700 */
+    }
   </style>
 </head>
 <body class="bg-slate-50">
@@ -254,17 +269,17 @@
         |   Hero Section                                                  |
         \=================================================================/
     -->
-    <section id="hero-section" class="relative flex items-center justify-center overflow-hidden bg-slate-50 text-gray-800 py-12 md:py-16 lg:py-24">
-      <div id="network-background" class="hidden lg:block">
+    <section id="hero-section" class="relative flex items-center justify-center overflow-hidden bg-slate-50 text-gray-800 min-h-screen">
+      <div id="network-background">
           <svg id="network-svg" width="100%" height="100%"></svg>
       </div>
       <div class="relative z-10 container mx-auto flex flex-col items-center px-4 text-center">
-        <h1 class="text-3xl sm:text-4xl lg:text-7xl font-bold leading-tight text-slate-800">
+        <h1 class="text-4xl sm:text-7xl font-bold leading-tight text-slate-800">
           Smarter <span class="text-blue-700">Ad Revenue</span>
           <br>
           Starts With <span class="text-blue-700">PubAd</span>
         </h1>
-        <p class="px-4 sm:px-8 mt-8 mb-8 text-base sm:text-lg lg:text-xl text-slate-600">
+        <p class="px-4 sm:px-8 mt-8 mb-8 text-lg sm:text-xl text-slate-600">
           Power your site with premium demand, contextual targeting, and clutter-free monetization.
           <br>
           No fluff—just transparent solutions that drive real results.
@@ -367,6 +382,12 @@
         |   Why Choose Us Section                                         |
         \=================================================================/
     -->
+    <!--
+        /=================================================================\
+        |   Placeholder Sections                                          |
+        \=================================================================/
+    -->
+    <section id="ad-formats" class="py-16 sm:py-24 bg-white"><div class="container mx-auto px-4 text-center"><h2 class="text-4xl sm:text-5xl font-bold text-slate-800">Ad Formats</h2><p class="mt-4 text-lg text-slate-600">Content for this section will be added soon.</p></div></section>
     <section id="why-choose-us" class="bg-slate-50 py-16 sm:py-24">
       <div class="container mx-auto px-4 sm:px-6 relative">
         <div class="text-center mb-12 sm:mb-16">
@@ -461,13 +482,6 @@
         </div>
       </div>
     </section>
-
-    <!--
-        /=================================================================\
-        |   Placeholder Sections                                          |
-        \=================================================================/
-    -->
-    <section id="ad-formats" class="py-16 sm:py-24 bg-white"><div class="container mx-auto px-4 text-center"><h2 class="text-4xl sm:text-5xl font-bold text-slate-800">Ad Formats</h2><p class="mt-4 text-lg text-slate-600">Content for this section will be added soon.</p></div></section>
     <!--
         /=================================================================\
         |   Our Team Section                                              |
@@ -540,36 +554,47 @@
             </svg>
           </button>
         </div>
-        <form action="#" method="POST">
+        <form action="#" method="POST" id="contact-form">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label for="name" class="block text-sm font-medium text-slate-700">Name</label>
-              <input type="text" name="name" id="name" required class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            </div>
-            <div>
-              <label for="website" class="block text-sm font-medium text-slate-700">Website Link</label>
+              <label for="website" class="block text-sm font-medium text-slate-700">Website Link <span class="text-red-500">*</span></label>
               <input type="url" name="website" id="website" required class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="https://example.com">
             </div>
             <div>
-              <label for="traffic" class="block text-sm font-medium text-slate-700">Website Traffic</label>
-              <select id="traffic" name="traffic" required class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <option>0 - 50k</option>
-                <option>50k - 100k</option>
-                <option>100k - 250k</option>
-                <option>250k - 1M</option>
-                <option>1M+</option>
-              </select>
+              <label for="traffic-button" class="block text-sm font-medium text-slate-700">Website Traffic <span class="text-red-500">*</span></label>
+              <div class="relative mt-1" id="custom-traffic-dropdown">
+                <button type="button" id="traffic-button" class="form-input-glow relative w-full cursor-default rounded-md border border-slate-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+                  <span class="block truncate" id="traffic-button-text">Select an option</span>
+                  <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M10 3a.75.75 0 01.53.22l3.5 3.5a.75.75 0 01-1.06 1.06L10 4.81 7.03 7.78a.75.75 0 01-1.06-1.06l3.5-3.5A.75.75 0 0110 3zm-3.78 9.28a.75.75 0 011.06 0L10 15.19l2.97-2.91a.75.75 0 111.06 1.06l-3.5 3.5a.75.75 0 01-1.06 0l-3.5-3.5a.75.75 0 010-1.06z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                </button>
+                <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm hidden" id="traffic-options" tabindex="-1" role="listbox" aria-labelledby="listbox-label">
+                  <li class="custom-dropdown-option" role="option" data-value="0 - 50k">0 - 50k</li>
+                  <li class="custom-dropdown-option" role="option" data-value="50k - 100k">50k - 100k</li>
+                  <li class="custom-dropdown-option" role="option" data-value="100k - 250k">100k - 250k</li>
+                  <li class="custom-dropdown-option" role="option" data-value="250k - 1M">250k - 1M</li>
+                  <li class="custom-dropdown-option" role="option" data-value="1M+">1M+</li>
+                </ul>
+                <input type="hidden" name="traffic" id="traffic-value" value="">
+              </div>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-700">Email <span class="text-red-500">*</span></label>
+              <input type="email" name="email" id="email" required class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
             <div>
               <label for="whatsapp" class="block text-sm font-medium text-slate-700">WhatsApp Number <span class="text-slate-500">(Optional)</span></label>
               <input type="text" name="whatsapp" id="whatsapp" class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
             <div class="md:col-span-2">
-              <label for="source" class="block text-sm font-medium text-slate-700">Contact Source <span class="text-slate-500">(Optional)</span></label>
+              <label for="source" class="block text-sm font-medium text-slate-700">Other Contacts <span class="text-slate-500">(Optional)</span></label>
               <input type="text" name="source" id="source" class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
             <div class="md:col-span-2">
-              <label for="message" class="block text-sm font-medium text-slate-700">Message</label>
+              <label for="message" class="block text-sm font-medium text-slate-700">Message <span class="text-red-500">*</span></label>
               <textarea id="message" name="message" rows="4" required class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
             </div>
             <div class="md:col-span-2">
@@ -721,8 +746,97 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // --- 5. Custom Dropdown Logic ---
+    const dropdownButton = document.getElementById('traffic-button');
+    const dropdownOptions = document.getElementById('traffic-options');
+    const dropdownButtonText = document.getElementById('traffic-button-text');
+    const hiddenTrafficInput = document.getElementById('traffic-value');
 
-    // --- 5. Animation Logic ---
+    if (dropdownButton && dropdownOptions && dropdownButtonText && hiddenTrafficInput) {
+        dropdownButton.addEventListener('click', () => {
+            dropdownOptions.classList.toggle('hidden');
+        });
+
+        dropdownOptions.querySelectorAll('li').forEach(option => {
+            option.addEventListener('click', () => {
+                // Update text and hidden input
+                const selectedValue = option.getAttribute('data-value');
+                dropdownButtonText.textContent = selectedValue;
+                hiddenTrafficInput.value = selectedValue;
+
+                // Update selected styles
+                dropdownOptions.querySelectorAll('li').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+
+                // Close dropdown
+                dropdownOptions.classList.add('hidden');
+            });
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', (e) => {
+            if (!document.getElementById('custom-traffic-dropdown').contains(e.target)) {
+                dropdownOptions.classList.add('hidden');
+            }
+        });
+    }
+
+    // --- 6. Form Validation Logic ---
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        // Create and inject error message container
+        const errorMessage = document.createElement('p');
+        errorMessage.id = 'form-error-message';
+        errorMessage.className = 'text-red-500 text-sm mt-2 text-center hidden';
+        errorMessage.textContent = 'Please fill all required fields.';
+        const submitButtonContainer = contactForm.querySelector('button[type="submit"]').parentElement;
+        submitButtonContainer.before(errorMessage);
+
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const websiteInput = document.getElementById('website');
+            const messageInput = document.getElementById('message');
+            const trafficValue = hiddenTrafficInput.value;
+
+            let isValid = true;
+
+            // Reset styles
+            websiteInput.classList.remove('border-red-500');
+            dropdownButton.classList.remove('border-red-500');
+            messageInput.classList.remove('border-red-500');
+
+            // Validate Website Link
+            if (websiteInput.value.trim() === '') {
+                websiteInput.classList.add('border-red-500');
+                isValid = false;
+            }
+
+            // Validate Website Traffic (custom dropdown)
+            if (trafficValue.trim() === '') {
+                dropdownButton.classList.add('border-red-500');
+                isValid = false;
+            }
+
+            // Validate Message
+            if (messageInput.value.trim() === '') {
+                messageInput.classList.add('border-red-500');
+                isValid = false;
+            }
+
+            if (isValid) {
+                errorMessage.classList.add('hidden');
+                console.log('Form is valid and would be submitted.');
+                // contactForm.submit(); // Uncomment to allow submission
+            } else {
+                errorMessage.classList.remove('hidden');
+            }
+        });
+    }
+
+
+    // --- 7. Animation Logic ---
     const svgNS = "http://www.w3.org/2000/svg";
     if (networkSvg && networkContainer && window.innerWidth >= 1024) {
         const width = networkContainer.clientWidth;
