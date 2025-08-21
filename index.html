@@ -777,7 +777,7 @@
               <div class="swiper-slide h-auto">
                 <div class="p-8 rounded-2xl border-2 border-blue-700 h-full bg-white">
                   <h3 class="text-2xl font-bold text-slate-800 mb-3">Equal Opportunity for All</h3>
-                  <p class="text-slate-600 leading-relaxed">Whether you run a small blog or a large media network, we provide the same premium tools, demand, and support — helping you grow faster.</p>
+                  <p class="text-slate-600 leading-relaxed">Whether you run a large media network, we provide the same premium tools, demand, and support — helping you grow faster.</p>
                 </div>
               </div>
             </div>
@@ -865,7 +865,7 @@
           <div class="flex flex-col items-center text-center transition-transform duration-300 hover:scale-105 group">
             <img src="3rd.jpg" alt="Profile picture of the Partner" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg -mb-16 z-10 group-hover:border-slate-300 transition-colors duration-300">
             <div class="bg-white rounded-2xl shadow-lg px-6 pt-20 pb-8 w-full transition-all duration-300 group-hover:bg-slate-100 group-hover:shadow-xl group-hover:shadow-slate-400/20">
-              <h3 class="text-2xl font-bold text-slate-800">Coming Soon</h3>
+              <h3 class="text-2xl font-bold text-slate-800">Hiring</h3>
               <p class="text-blue-700 font-semibold mt-1">Business Development Manager</p>
               <div class="flex mt-4 justify-center">
                 <a href="mailto:partnerships@pubad.media" aria-label="Email Business Development">
@@ -1058,8 +1058,8 @@
             <div class="text-slate-200 text-base font-bold">&copy; 2025 PubAd.media | All Rights Reserved</div>
             <div>
                 <ul class="flex space-x-6">
-                    <li><a href="javascript:void(0)" id="terms-link-desktop" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Terms of Use</a></li>
-                    <li><a href="javascript:void(0)" id="privacy-link-desktop" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Privacy Policy</a></li>
+                    <li><a href="terms-of-use.html" id="terms-link-desktop" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Terms of Use</a></li>
+                    <li><a href="privacy-policy.html" id="privacy-link-desktop" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>
@@ -1116,8 +1116,8 @@
         <!-- 4. Page Links -->
         <div>
             <ul class="flex space-x-6">
-                <li><a href="javascript:void(0)" id="terms-link-mobile" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Terms of Use</a></li>
-                <li><a href="javascript:void(0)" id="privacy-link-mobile" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Privacy Policy</a></li>
+                <li><a href="terms-of-use.html" id="terms-link-mobile" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Terms of Use</a></li>
+                <li><a href="privacy-policy.html" id="privacy-link-mobile" class="text-base text-slate-300 hover:text-white transition-colors font-bold">Privacy Policy</a></li>
             </ul>
         </div>
         
@@ -1128,35 +1128,6 @@
     </div>
 
 </footer>
-
-<!-- Legal Modals -->
-<div id="terms-modal" class="legal-modal hidden fixed inset-0 z-50 overflow-hidden">
-  <div class="modal-content bg-white w-full h-full absolute p-8 overflow-y-auto">
-    <button class="modal-close absolute top-4 right-4 text-slate-500 hover:text-slate-800 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-    <div class="container mx-auto mt-12">
-      <h2 class="text-4xl font-bold text-blue-700 mb-6">Terms of Use</h2>
-      <p class="text-slate-600 text-lg">Will be updated Soon.</p>
-    </div>
-  </div>
-</div>
-
-<div id="privacy-modal" class="legal-modal hidden fixed inset-0 z-50 overflow-hidden">
-  <div class="modal-content bg-white w-full h-full absolute p-8 overflow-y-auto">
-    <button class="modal-close absolute top-4 right-4 text-slate-500 hover:text-slate-800 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-    <div class="container mx-auto mt-12">
-      <h2 class="text-4xl font-bold text-blue-700 mb-6">Privacy Policy</h2>
-      <p class="text-slate-600 text-lg">Will be updated Soon.</p>
-    </div>
-  </div>
-</div>
   
 <!--
     /=================================================================\
@@ -1445,7 +1416,52 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (isValid) {
-                console.log('Form is valid and would be submitted.');
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.innerHTML;
+                submitButton.innerHTML = 'Submitting...';
+                submitButton.disabled = true;
+                errorMessage.classList.add('hidden');
+
+                // =================================================================================================
+                //  IMPORTANT: Replace this URL with your Google Apps Script Web App URL.
+                // =================================================================================================
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbyEwm6Ttxo4__-1sWsoR9Z2eN2E6S3O_3X_H_e6P4sF9Gf_r8y3Z2v1B-0a9s7X6J5C/exec'; // <-- Replace with your URL
+
+                const formData = new FormData(contactForm);
+
+                fetch(scriptURL, { method: 'POST', body: formData})
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            // Handle HTTP errors
+                            throw new Error('Submission failed. Please try again.');
+                        }
+                    })
+                    .then(data => {
+                        if (data.result === 'success') {
+                            const formContainer = document.getElementById('form-modal-content');
+                            formContainer.innerHTML = `
+                                <div class="text-center p-8">
+                                    <h2 class="text-3xl font-bold text-green-600 mb-4">Success!</h2>
+                                    <p class="text-slate-600 mb-6">Your message has been sent successfully. We'll get back to you shortly.</p>
+                                    <button id="form-success-close-button" class="mt-4 px-6 py-2 bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 transition-colors">Close</button>
+                                </div>
+                            `;
+                            document.getElementById('form-success-close-button').addEventListener('click', closeModal);
+                        } else {
+                            // Handle application-level errors from the script
+                            throw new Error(data.error || 'An unknown error occurred.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error!', error.message);
+                        errorMessage.textContent = 'An error occurred: ' + error.message;
+                        errorMessage.classList.remove('hidden');
+                        submitButton.innerHTML = originalButtonText;
+                        submitButton.disabled = false;
+                    });
+
             } else if(generalError) {
                 errorMessage.classList.remove('hidden');
             }
@@ -1528,46 +1544,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- 10. Legal Modal Logic ---
-    const termsModal = document.getElementById('terms-modal');
-    const privacyModal = document.getElementById('privacy-modal');
-    const termsLinks = [document.getElementById('terms-link-desktop'), document.getElementById('terms-link-mobile')];
-    const privacyLinks = [document.getElementById('privacy-link-desktop'), document.getElementById('privacy-link-mobile')];
-    const legalModals = document.querySelectorAll('.legal-modal');
-
-    const openLegalModal = (modal) => {
-        if (!modal) return;
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            modal.classList.add('active');
-        }, 10);
-    };
-
-    const closeLegalModal = (modal) => {
-        if (!modal) return;
-        modal.classList.remove('active');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
-    };
-
-    termsLinks.forEach(link => {
-        if (link) link.addEventListener('click', () => openLegalModal(termsModal));
-    });
-
-    privacyLinks.forEach(link => {
-        if (link) link.addEventListener('click', () => openLegalModal(privacyModal));
-    });
-
-    legalModals.forEach(modal => {
-        if (modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal || e.target.closest('.modal-close')) {
-                    closeLegalModal(modal);
-                }
-            });
-        }
-    });
 });
 </script>
 
