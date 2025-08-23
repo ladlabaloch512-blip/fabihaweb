@@ -13,6 +13,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PubAd.media - Smarter Ad Revenue</title>
+  <link rel="icon" href="assets/logos/favicon.png" type="image/png">
   
   <!-- External Libraries & Frameworks -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,7 +21,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/25.4.5/build/css/intlTelInput.min.css">
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/25.4.5/build/js/intlTelInputWithUtils.min.js"></script>
 
   <!-- Custom Page Styles -->
   <style>
@@ -420,7 +423,7 @@
 <header id="main-header" class="md:sticky top-0 z-50 transition-all duration-300">
   <div class="container mx-auto flex justify-between items-center h-20 px-4 sm:px-6">
     
-    <a href="#" aria-label="Back to homepage" class="flex-shrink-0 z-10">
+    <a href="/" aria-label="Back to homepage" class="flex-shrink-0 z-10">
       <img src="assets/logos/logo.png" alt="PubAd.media Logo" class="h-10 md:h-8 lg:h-10 w-auto transition-all duration-300">
     </a>
 
@@ -985,7 +988,7 @@
             </div>
             <div>
               <label for="whatsapp" class="block text-sm font-medium text-slate-700">WhatsApp Number <span class="text-slate-500">(Optional)</span></label>
-              <input type="text" name="whatsapp" id="whatsapp" class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm">
+              <input type="tel" name="whatsapp" id="whatsapp" class="form-input-glow mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm">
             </div>
             <div class="md:col-span-2">
               <label for="source" class="block text-sm font-medium text-slate-700">Other Contacts <span class="text-slate-500">(Optional)</span></label>
@@ -1012,7 +1015,7 @@
         <div class="flex justify-between items-center px-4 sm:px-6 lg:px-8">
             <!-- Logo -->
             <div class="flex-shrink-0">
-                <a href="#" aria-label="Back to homepage">
+                <a href="/" aria-label="Back to homepage">
                     <img src="assets/logos/logof.png" alt="PubAd.media Logo" class="h-8 lg:h-10 w-auto">
                 </a>
             </div>
@@ -1069,7 +1072,7 @@
     <div class="md:hidden w-full py-8 px-4 flex flex-col items-center space-y-8 text-center">
         <!-- 1. Logo -->
         <div class="flex-shrink-0">
-            <a href="#" aria-label="Back to homepage">
+            <a href="/" aria-label="Back to homepage">
                 <img src="assets/logos/logof.png" alt="PubAd.media Logo" class="h-12 w-auto">
             </a>
         </div>
@@ -1355,7 +1358,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- 7. Form Validation Logic ---
+    // --- 7. Intl-Tel-Input Initialization ---
+    const phoneInputField = document.querySelector("#whatsapp");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/25.4.5/build/js/utils.js",
+        initialCountry: "auto",
+        geoIpLookup: function(callback) {
+            fetch("https://ipapi.co/json")
+                .then(function(res) { return res.json(); })
+                .then(function(data) { callback(data.country_code); })
+                .catch(function() { callback("us"); });
+        }
+    });
+
+    // --- 8. Form Validation Logic ---
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         const errorMessage = document.createElement('p');
@@ -1373,16 +1389,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const whatsappInput = document.getElementById('whatsapp');
             const trafficValue = hiddenTrafficInput.value;
             const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
-            const phoneRegex = /^\+?[0-9\s-]{7,}$/;
             let isValid = true;
             let generalError = false;
 
             websiteInput.classList.remove('border-red-500');
             dropdownButton.classList.remove('border-red-500');
             messageInput.classList.remove('border-red-500');
-            whatsappInput.classList.remove('border-red-500');
+            phoneInputField.classList.remove('border-red-500');
             errorMessage.classList.add('hidden');
-            
+
             const whatsappError = document.getElementById('whatsapp-error');
             if(whatsappError) whatsappError.classList.add('hidden');
 
@@ -1401,14 +1416,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 isValid = false;
                 generalError = true;
             }
-            if (whatsappInput.value.trim() !== '' && !phoneRegex.test(whatsappInput.value.trim())) {
-                whatsappInput.classList.add('border-red-500');
-                if(!whatsappError) {
+            if (phoneInputField.value.trim() !== '' && !phoneInput.isValidNumber()) {
+                phoneInputField.classList.add('border-red-500');
+                 if(!whatsappError) {
                     const error = document.createElement('p');
                     error.id = 'whatsapp-error';
                     error.className = 'text-red-500 text-xs mt-1';
                     error.textContent = 'Please enter a valid phone number.';
-                    whatsappInput.parentElement.appendChild(error);
+                    phoneInputField.parentElement.appendChild(error);
                 } else {
                     whatsappError.classList.remove('hidden');
                 }
@@ -1416,6 +1431,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (isValid) {
+                if (phoneInputField.value.trim()) {
+                    whatsappInput.value = phoneInput.getNumber();
+                }
                 const submitButton = contactForm.querySelector('button[type="submit"]');
                 const originalButtonText = submitButton.innerHTML;
                 submitButton.innerHTML = 'Submitting...';
